@@ -6,6 +6,7 @@ version: '2'
 services:
   mysql:
     image: docker.io/bitnami/mysql:latest
+    container_name: mysql
     ports:
       - '3306:3306'
     environment:
@@ -15,8 +16,9 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
       - ./database:/bitnami/mysql/data
-  app:
+  backend:
     image: docker.io/bitnami/laravel:10
+    container_name: backend
     ports:
       - '8000:8000'
     environment:

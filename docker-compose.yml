@@ -4,23 +4,28 @@
 version: '2'
 
 services:
-  mariadb:
+  mysql:
     image: docker.io/bitnami/mysql:latest
+    ports:
+      - '3306:3306'
     environment:
-      - MYSQL_USER=graduation_project
-      - MYSQL_PASSWORD=1234546789
-      - MARIADB_DATABASE=graduation_project
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    volumes:
+      - ./database:/bitnami/mysql/data
   app:
     image: docker.io/bitnami/laravel:10
     ports:
       - '8000:8000'
     environment:
-       - DB_HOST=mysql
-       - DB_PORT=3306
-       - DB_USERNAME=graduation_project
-       - DB_PASSWORD=1234546789
-       - DB_DATABASE=graduation_project
+       - DB_HOST=${DB_HOST}
+       - DB_PORT=${DB_PORT}
+       - DB_USERNAME=${DB_USERNAME}
+       - DB_PASSWORD=${DB_PASSWORD}
+       - DB_DATABASE=${DB_DATABASE}
     volumes:
       - './backend:/app'
     depends_on:
-      - mariadb
+      - mysql

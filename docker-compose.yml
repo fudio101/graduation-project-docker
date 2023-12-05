@@ -16,9 +16,9 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
       - ./database:/bitnami/mysql/data
-  backend:
+  web:
     image: docker.io/bitnami/laravel:10
-    container_name: backend
+    container_name: web
     ports:
       - '8000:8000'
     environment:
@@ -28,6 +28,6 @@ services:
        - DB_PASSWORD=${DB_PASSWORD}
        - DB_DATABASE=${DB_DATABASE}
     volumes:
-      - './backend:/app'
-    depends_on:
-      - mysql
+      - './web:/app'
+#    depends_on:
+#      - mysql

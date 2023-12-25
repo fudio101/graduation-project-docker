@@ -1,0 +1,60 @@
+enum user_rote {
+    admin [note: 'Waiting to be processed']
+    owner
+    manager
+    normal_user
+}
+
+Table users {
+  id int [pk]
+  username varchar
+  name varchar
+  email varchar
+  password varchar
+  role user_rote
+  room_id int 
+}
+
+Table houses {
+  id int [pk]
+  name varchar
+  address varchar
+  province_id int
+  district_id int
+  ward_id int
+  manager_id int
+}
+
+Table room_types {
+  id int [pk]
+  name varchar
+  rents int [note: 'Giá thuê']
+}
+
+Table rooms {
+  id int [pk]
+  name varchar
+  room_type_id int
+  house_id int
+  size int
+  length int
+  width int
+}
+
+enum service_type {
+  consumable_service [note: 'dịch vụ tiêu hao']
+  renewable_service [note: 'dịch vụ gia hạn']
+}
+
+Table services {
+  id int [pk]
+  name varchar
+  type service_type
+  price int
+}
+
+
+Ref: houses.manager_id > users.id // many-to-one
+Ref: rooms.room_type_id > room_types.id // many-to-one
+Ref: rooms.house_id > houses.id // many-to-one
+Ref: users.room_id > rooms.id // many-to-one

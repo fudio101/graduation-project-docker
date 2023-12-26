@@ -41,12 +41,6 @@ Table rooms {
   width int
 }
 
-Table room_member {
-  id int [pk]
-  room_id int
-  user_id int
-}
-
 enum service_type {
   consumable_service [note: 'dịch vụ tiêu hao']
   renewable_service [note: 'dịch vụ gia hạn']
@@ -73,8 +67,6 @@ Ref: houses.manager_id > users.id // many-to-one
 Ref: rooms.room_type_id > room_types.id // many-to-one
 Ref: rooms.house_id > houses.id // many-to-one
 Ref: users.room_id > rooms.id // many-to-one
-Ref: room_member.room_id > rooms.id // many-to-one
-Ref: room_member.user_id > users.id // many-to-one
 Ref: services.id <> houses.id // many-to-many
 Ref: contracts.room_id > rooms.id // many-to-one
 Ref: contracts.user_id > users.id // many-to-one

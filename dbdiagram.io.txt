@@ -57,9 +57,32 @@ Table contracts {
   id int [pk]
   room_id int
   user_id int [note: 'đại diện ký hợp đồng']
-  start_date datetime
-  end_date datetime
-  price int [note: 'giá lúc ký hợp đồng']
+  start_date date
+  end_date date
+  price int [note: 'giá thoả thuận']
+  is_signed datetime [note: 'ngày ký hợp đồng (không thể xoá sửa, chỉ huỷ)']
+}
+
+Table bills {
+  id int [pk]
+  code varchar
+  room_id int
+  total_money int
+  monthly_bill_id int
+}
+
+Table bills_services {
+  id int [pk]
+  bill_id int
+  service_id int
+  quantity int
+  total_money int
+}
+
+Table monthly_bills {
+  id int [pk]
+  rent int [note: 'tiền phòng']
+  total_money int
 }
 
 
@@ -70,3 +93,8 @@ Ref: users.room_id > rooms.id // many-to-one
 Ref: services.id <> houses.id // many-to-many
 Ref: contracts.room_id > rooms.id // many-to-one
 Ref: contracts.user_id > users.id // many-to-one
+Ref: bills.room_id > rooms.id // many-to-one
+Ref: bills_services.bill_id > bills.id // many-to-one
+Ref: bills_services.service_id > services.id // many-to-one
+Ref: monthly_bills.id < bills.monthly_bill_id // one-to-many
+

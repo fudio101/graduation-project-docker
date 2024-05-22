@@ -16,6 +16,7 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
       - ./database:/bitnami/mysql/data
+    restart: always
   web:
     image: docker.io/bitnami/laravel:10
     container_name: web
